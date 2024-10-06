@@ -1,0 +1,72 @@
+# IMPORT USED MODULES
+import os, colorama, requests, paramiko
+import win32com.client as win32
+from colorama import Fore, Back, Style
+from datetime import datetime
+colorama.init()
+
+###################  VARIABLES  ########################
+serverping_slz = ["***.com","***.zurich.com","MEIDWAP00037.com","**uat"]
+serverping_spotfire = ["**.uat","CEAWD13265.zurich.uat","**.uat","**.com","**.com"]
+pings = [serverping_slz,serverping_spotfire]
+
+webpages_spotfire = [https://**com/,https://***.com/,https://**.com/]
+webpages = [webpages_spotfire]
+
+count = 0
+########################################################
+
+####################  SERVERS  #########################
+print(Fore.CYAN + '+==============================+')
+print(Fore.CYAN + '|    CHECKING SERVERS (ping)   |')
+print(Fore.CYAN + '+==============================+')
+
+# Iterate each server
+for server in pings:
+    if count == 0:
+        print(Fore.CYAN + '| > SLZ')
+    elif count == 1:
+        print(Fore.CYAN + '| > SPOTFIRE')
+    count=count+1
+    for hostname in server:
+      # Make ping
+      response = os.system("ping -n 1 " + hostname.strip() + " > NULL")
+      # If there is response, print in green - ACTIVE
+      if response == 0:
+        print(Fore.GREEN + f'Network Active - {hostname}')
+      # If there is NOT response, print in red - ERROR
+      else:
+        print(Fore.RED + f'Network Error - {hostname}')
+
+print(Style.RESET_ALL)
+
+########################################################
+count=0
+###################  WEBPAGES  #########################
+print(Fore.CYAN + '+==============================+')
+print(Fore.CYAN + '|    CHECKING SERVERS WEBS     |')
+print(Fore.CYAN + '+==============================+')
+
+# Iterate each webpage
+for server in webpages:
+    if count == 0:
+        print(Fore.CYAN + '| > SPOTFIRE')
+    count=count+1
+    for web in server:
+        try:
+            result = requests.get(web.strip())
+        except:
+            # If there cannot connect, print in red - DOWN
+            print(Fore.RED + f'Server Web DOWN: {web}')
+            continue
+        # If there status=200, print in green - ACTIVE
+        if result.status_code == 200:
+            print(Fore.GREEN + f'Server Web UP: {web}')
+        # If there status!=200, print in red - DOWN
+        else:
+            print(Fore.RED + f'Server Web DOWN: {web}')
+
+print(Style.RESET_ALL)
+
+########################################################
+k=input("Press any key to exit...")
