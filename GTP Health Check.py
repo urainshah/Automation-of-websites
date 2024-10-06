@@ -172,7 +172,7 @@ for row in ws.iter_rows(2, ws.max_row):
             FROM = ws.cell(row = cell1, column = 2).value
             print(FROM)
 '''SERVER = "outlook.sbl.com"
-TO = ['nagender11.yadav@nttdata.com', 'nagender.yadav@se2.com']
+TO = ['********@.com', '*****@.com']
 SUBJECT = "Fast - Sunday Health Check"
 TEXT = 'Hi Team,\n\nPlease find the Fast - Health check results.\n\nLink Check -\n'+(email_body)+'\n\nRegards,\nRPA Team'
 
@@ -190,7 +190,7 @@ shutil.make_archive('C:\\GTP\\Output\\Unprocessed.zip', 'zip', 'C:\\GTP\\Output\
 import win32com.client as win32
 outlook = win32.Dispatch('outlook.application')
 mail=outlook.CreateItem(0)
-mail.To='nagender11.yadav@nttdata.com;nagender.yadav@se2.com'
+mail.To='******@a.com;****@.com'
 mail.Subject='GTP - Sunday Health Check'
 mail.HTMLBody='Hi Team,\n\nPlease find the GTP - Health check results.\n\nLink Check -\n'+ message +'\n\nRegards,\nRPA Team' #this field is optional
 mail.Body='Hi Team,\n\nPlease find the GTP - Health check results.\n\nLink Check -\n'+ message +'\n\nRegards,\nRPA Team'
